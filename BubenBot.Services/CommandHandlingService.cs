@@ -15,9 +15,9 @@ namespace BubenBot.Services
     {
         private readonly DiscordSocketClient _client;
         private readonly CommandService _commandService;
-        private readonly ILogger<CommandHandlingService> _logger;
         private readonly IPrefixService _prefixService;
         private readonly IServiceProvider _provider;
+        private readonly ILogger _logger;
 
         public CommandHandlingService(
             DiscordSocketClient client,

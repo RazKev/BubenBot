@@ -12,8 +12,8 @@ namespace BubenBot.Services
     public class LogService : IHostedService
     {
         private readonly DiscordSocketClient _client;
-        private readonly ILogger<LogService> _logger;
         private readonly CommandService _commandService;
+        private readonly ILogger _logger;
 
         public LogService(DiscordSocketClient client, ILogger<LogService> logger, CommandService commandService)
         {

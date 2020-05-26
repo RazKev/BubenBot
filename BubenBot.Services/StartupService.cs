@@ -12,7 +12,7 @@ namespace BubenBot.Services
     {
         private readonly DiscordSocketClient _client;
         private readonly IConfiguration _configuration;
-        private readonly ILogger<StartupService> _logger;
+        private readonly ILogger _logger;
 
         public StartupService(
             DiscordSocketClient client,
