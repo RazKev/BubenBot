@@ -27,8 +27,7 @@ namespace BubenBot.Bot
                 new CommandService(
                     new CommandServiceConfig()
                     {
-                        LogLevel = LogSeverity.Verbose,
-                        DefaultRunMode = RunMode.Async,
+                        LogLevel = LogSeverity.Verbose
                     }));
         }
 
