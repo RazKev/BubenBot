@@ -13,7 +13,7 @@ using Serilog;
 
 namespace BubenBot.Bot
 {
-    class Program
+    internal static class Program
     {
         private static async Task Main()
             => await
