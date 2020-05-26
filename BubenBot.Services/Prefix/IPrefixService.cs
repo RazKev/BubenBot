@@ -2,6 +2,7 @@
 {
     public interface IPrefixService
     {
-        string GetPrefix();
+        string GetPrefix(ulong guildId);
+        void SetPrefix(ulong guildId, string prefix);
     }
 }

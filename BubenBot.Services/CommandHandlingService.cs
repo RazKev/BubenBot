@@ -50,10 +50,13 @@ namespace BubenBot.Services
         {
             if (!(message is SocketUserMessage userMessage))
                 return;
+            if (!(message.Channel is IGuildChannel))
+                return;
 
             var argPos = 0;
-            
-            if (!(userMessage.HasStringPrefix(_prefixService.GetPrefix(), ref argPos, StringComparison.Ordinal) || 
+
+            var guildId = ((IGuildChannel) userMessage.Channel).Guild.Id;
+            if (!(userMessage.HasStringPrefix(_prefixService.GetPrefix(guildId), ref argPos, StringComparison.Ordinal) || 
                   userMessage.HasMentionPrefix(_client.CurrentUser, ref argPos)))
                 return;
 

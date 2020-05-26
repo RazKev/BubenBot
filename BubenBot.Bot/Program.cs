@@ -49,7 +49,7 @@ namespace BubenBot.Bot
                         }
                     )
                 )
-                .AddSingleton<IPrefixService, PrefixService>()
+                .AddSingleton<IPrefixService, ConfigurationPrefixService>()
                 .AddHostedService<StartupService>()
                 .AddHostedService<CommandHandlingService>()
                 .AddHostedService<LogService>();
