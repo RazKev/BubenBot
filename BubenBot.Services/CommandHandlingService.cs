@@ -54,7 +54,7 @@ namespace BubenBot.Services
             var argPos = 0;
             
             if (!(userMessage.HasStringPrefix(_prefixService.GetPrefix(), ref argPos, StringComparison.Ordinal) || 
-                  userMessage.HasMentionPrefix(_client.CurrentUser as IUser, ref argPos)))
+                  userMessage.HasMentionPrefix(_client.CurrentUser, ref argPos)))
                 return;
 
             var context = new SocketCommandContext(_client, userMessage);
