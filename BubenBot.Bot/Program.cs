@@ -1,11 +1,13 @@
 ﻿using System;
 using System.IO;
 using System.Threading.Tasks;
+using BubenBot.Data;
 using BubenBot.Services;
 using BubenBot.Services.Prefix;
 using Discord;
 using Discord.Commands;
 using Discord.WebSocket;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -48,6 +50,11 @@ namespace BubenBot.Bot
                             LogLevel = LogSeverity.Verbose
                         }
                     )
+                )
+                .AddDbContext<BotContext>(builder =>
+                    builder
+                        .UseNpgsql(context.Configuration.GetConnectionString("BotContext"))
+                        .UseSnakeCaseNamingConvention()
                 )
                 .AddSingleton<IPrefixService, ConfigurationPrefixService>()
                 .AddHostedService<StartupService>()
