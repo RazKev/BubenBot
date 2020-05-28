@@ -9,12 +9,12 @@ using Xunit;
 
 namespace BubenBot.Services.Tests.Tags
 {
-    public class DeleteTag
+    public class DeleteTagTests
     {
         private readonly AutoMocker _autoMocker;
         private readonly TagService _tagService;
         
-        public DeleteTag()
+        public DeleteTagTests()
         {
             var options = new DbContextOptionsBuilder<BotContext>()
                 .UseInMemoryDatabase(Guid.NewGuid().ToString("N"));

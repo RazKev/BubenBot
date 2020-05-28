@@ -9,12 +9,12 @@ using Xunit;
 
 namespace BubenBot.Services.Tests.Tags
 {
-    public class TagExists
+    public class TagExistsTests
     {
         private readonly AutoMocker _autoMocker;
         private readonly TagService _tagService;
         
-        public TagExists()
+        public TagExistsTests()
         {
             var options = new DbContextOptionsBuilder<BotContext>()
                 .UseInMemoryDatabase(Guid.NewGuid().ToString("N"));
