@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using BubenBot.Data;
 using BubenBot.Services;
 using BubenBot.Services.Prefix;
+using BubenBot.Services.Tag;
 using Discord;
 using Discord.Commands;
 using Discord.WebSocket;
@@ -57,6 +58,7 @@ namespace BubenBot.Bot
                         .UseSnakeCaseNamingConvention()
                 )
                 .AddSingleton<IPrefixService, ConfigurationPrefixService>()
+                .AddScoped<ITagService, TagService>()
                 .AddHostedService<StartupService>()
                 .AddHostedService<CommandHandlingService>()
                 .AddHostedService<LogService>();
