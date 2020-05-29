@@ -4,10 +4,9 @@
         <TargetFramework>netcoreapp5.0</TargetFramework>
 
         <IsPackable>false</IsPackable>
+        <IsPublishable>false</IsPublishable>
 
-        <LangVersion>8</LangVersion>
-
-        <OutputType>Library</OutputType>
+        <LangVersion>latest</LangVersion>
     </PropertyGroup>
 
     <ItemGroup>
