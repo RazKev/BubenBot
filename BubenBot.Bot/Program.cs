@@ -57,11 +57,11 @@ namespace BubenBot.Bot
                         .UseNpgsql(context.Configuration.GetConnectionString("BotContext"))
                         .UseSnakeCaseNamingConvention()
                 )
-                .AddSingleton<IPrefixService, ConfigurationPrefixService>()
+                .AddScoped<IPrefixService, ConfigurationPrefixService>()
                 .AddScoped<ITagService, TagService>()
                 .AddHostedService<StartupService>()
                 .AddHostedService<CommandHandlingService>()
                 .AddHostedService<LogService>();
-        }
+        } 
     }
 }

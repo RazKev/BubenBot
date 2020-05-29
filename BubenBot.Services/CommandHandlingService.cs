@@ -56,7 +56,7 @@ namespace BubenBot.Services
             var argPos = 0;
 
             var guildId = ((IGuildChannel) userMessage.Channel).Guild.Id;
-            if (!(userMessage.HasStringPrefix(_prefixService.GetPrefix(guildId), ref argPos, StringComparison.Ordinal) || 
+            if (!(userMessage.HasStringPrefix(await _prefixService.GetCommandPrefixAsync(guildId), ref argPos, StringComparison.Ordinal) || 
                   userMessage.HasMentionPrefix(_client.CurrentUser, ref argPos)))
                 return;
 

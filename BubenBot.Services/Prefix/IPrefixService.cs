@@ -1,8 +1,12 @@
-﻿namespace BubenBot.Services.Prefix
+﻿using System.Threading.Tasks;
+
+namespace BubenBot.Services.Prefix
 {
     public interface IPrefixService
     {
-        string GetPrefix(ulong guildId);
-        void SetPrefix(ulong guildId, string prefix);
+        Task<string> GetCommandPrefixAsync(ulong guildId);
+        Task<string> GetTagPrefixAsync(ulong guildId);
+        Task SetCommandPrefixAsync(ulong guildId, string? prefix);
+        Task SetTagPrefixAsync(ulong guildId, string? prefix);
     }
 }
