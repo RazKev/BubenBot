@@ -1,4 +1,5 @@
-﻿using System.Threading;
+﻿using System;
+using System.Threading;
 using System.Threading.Tasks;
 using Discord;
 using Discord.WebSocket;
@@ -31,7 +32,7 @@ namespace BubenBot.Services
             if (string.IsNullOrWhiteSpace(token))
             {
                 _logger.LogCritical("No Token was found");
-                return;
+                throw new InvalidOperationException("Bot token cannot be blank");
             }
 
             await _client.LoginAsync(TokenType.Bot, token);

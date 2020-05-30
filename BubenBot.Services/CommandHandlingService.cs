@@ -24,8 +24,7 @@ namespace BubenBot.Services
             CommandService commandService,
             ILogger<CommandHandlingService> logger,
             IPrefixService prefixService,
-            IServiceProvider provider
-        )
+            IServiceProvider provider)
         {
             _client = client;
             _commandService = commandService;
@@ -56,18 +55,19 @@ namespace BubenBot.Services
             var argPos = 0;
 
             var guildId = ((IGuildChannel) userMessage.Channel).Guild.Id;
-            if (!(userMessage.HasStringPrefix(await _prefixService.GetCommandPrefixAsync(guildId), ref argPos, StringComparison.Ordinal) || 
+            if (!(userMessage.HasStringPrefix(await _prefixService.GetCommandPrefixAsync(guildId), ref argPos) ||
                   userMessage.HasMentionPrefix(_client.CurrentUser, ref argPos)))
                 return;
 
             var context = new SocketCommandContext(_client, userMessage);
 
             var result = await _commandService.ExecuteAsync(context, argPos, _provider);
-            
+
             if (result.IsSuccess)
                 return;
-            
-            _logger.LogError("Error executing {Command}. Error: {Error}", userMessage.Content.Substring(argPos), result.ErrorReason);
+
+            _logger.LogError("Error executing {Command}. Error: {Error}", userMessage.Content.Substring(argPos),
+                result.ErrorReason);
         }
     }
 }
