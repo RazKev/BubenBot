@@ -7,17 +7,17 @@ namespace BubenBot.Data.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.RenameColumn(
-                name: "Value",
-                table: "Tags",
-                newName: "Content");
+                name: "value",
+                table: "tags",
+                newName: "content");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.RenameColumn(
-                name: "Content",
-                table: "Tags",
-                newName: "Value");
+                name: "content",
+                table: "tags",
+                newName: "value");
         }
     }
 }

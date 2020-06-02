@@ -7,8 +7,8 @@ namespace BubenBot.Data.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.AddColumn<decimal>(
-                name: "GuildId",
-                table: "Tags",
+                name: "guild_id",
+                table: "tags",
                 type: "numeric(20,0)",
                 nullable: false,
                 defaultValue: 0m);
@@ -17,8 +17,8 @@ namespace BubenBot.Data.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropColumn(
-                name: "GuildId",
-                table: "Tags");
+                name: "guild_id",
+                table: "tags");
         }
     }
 }

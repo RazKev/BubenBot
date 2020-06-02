@@ -25,28 +25,33 @@ namespace BubenBot.Data.Migrations
                 {
                     b.Property<long>("TagId")
                         .ValueGeneratedOnAdd()
-                        .HasColumnName("Id")
+                        .HasColumnName("id")
                         .HasColumnType("bigint")
                         .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityAlwaysColumn);
 
                     b.Property<DateTime>("Created")
+                        .HasColumnName("created")
                         .HasColumnType("timestamp without time zone");
 
                     b.Property<string>("Name")
                         .IsRequired()
+                        .HasColumnName("name")
                         .HasColumnType("character varying(25)")
                         .HasMaxLength(25);
 
                     b.Property<decimal>("OwnerId")
+                        .HasColumnName("owner_id")
                         .HasColumnType("numeric(20,0)");
 
                     b.Property<string>("Value")
                         .IsRequired()
+                        .HasColumnName("value")
                         .HasColumnType("text");
 
-                    b.HasKey("TagId");
+                    b.HasKey("TagId")
+                        .HasName("pk_tags");
 
-                    b.ToTable("Tags");
+                    b.ToTable("tags");
                 });
 #pragma warning restore 612, 618
         }
