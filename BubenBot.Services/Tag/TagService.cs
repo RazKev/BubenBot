@@ -3,6 +3,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using BubenBot.Data;
 using BubenBot.Data.Models;
+using Discord;
 using Discord.WebSocket;
 using Microsoft.EntityFrameworkCore;
 
@@ -89,17 +90,17 @@ namespace BubenBot.Services.Tag
                 throw new ArgumentNullException(nameof(name));
             if (string.IsNullOrWhiteSpace(name))
                 throw new ArgumentException("The tag name cannot be empty", nameof(name));
-            
+
             name = name.Trim().ToLower();
 
             var tag = await (_botContext.Tags as IQueryable<TagEntity>)
                             .Where(x => x.GuildId == guildId)
                             .Where(x => x.Name == name)
                             .SingleOrDefaultAsync();
-            
+
             if (tag is null)
                 throw new InvalidOperationException("The given tag doesn't exist");
-            
+
             if (tag.OwnerId != deleterId)
                 throw new InvalidOperationException("Only the owner can delete the tag");
 
@@ -120,6 +121,41 @@ namespace BubenBot.Services.Tag
                          .Where(x => x.GuildId == guildId)
                          .Where(x => x.Name == name)
                          .AnyAsync();
+        }
+
+        public async Task<TagEntity?> GetTagAsync(ulong guildId, string? name)
+        {
+            if (name is null)
+                throw new ArgumentNullException(nameof(name));
+            if (string.IsNullOrWhiteSpace(name))
+                throw new ArgumentException("The tag name cannot be empty", nameof(name));
+
+            name = name.Trim().ToLower();
+
+            return await (_botContext.Tags as IQueryable<TagEntity>)
+                         .Where(x => x.GuildId == guildId)
+                         .Where(x => x.Name == name)
+                         .SingleOrDefaultAsync();
+        }
+
+        public async Task PostTagAsync(ulong guildId, ulong channelId, string? name)
+        {
+            if (name is null)
+                throw new ArgumentNullException(nameof(name));
+            if (string.IsNullOrWhiteSpace(name))
+                throw new ArgumentException("The tag name cannot be empty", nameof(name));
+
+            var channel = _client.GetChannel(channelId);
+
+            if (!(channel is IMessageChannel messageChannel))
+                throw new InvalidOperationException($"The channel {channel.Id} is not a message channel");
+
+            var tag = await GetTagAsync(guildId, name.Trim().ToLower());
+
+            if (tag is null)
+                throw new InvalidOperationException("The given tag doesn't exist");
+
+            await messageChannel.SendMessageAsync(tag.Content);
         }
     }
 }
