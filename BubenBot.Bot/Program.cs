@@ -61,7 +61,8 @@ namespace BubenBot.Bot
                 .AddScoped<ITagService, TagService>()
                 .AddHostedService<StartupService>()
                 .AddHostedService<CommandHandlingService>()
+                .AddHostedService<TagHandlingService>()
                 .AddHostedService<LogService>();
-        } 
+        }
     }
 }
