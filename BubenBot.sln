@@ -11,6 +11,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BubenBot.Data", "BubenBot.D
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BubenBot.Services.Tests", "BubenBot.Services.Tests\BubenBot.Services.Tests.csproj", "{CF53FB47-14FE-423E-B2FC-FCE17C869A6D}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BubenBot.Common", "BubenBot.Common\BubenBot.Common.csproj", "{812A446F-9BD5-4D72-9775-E41D29C08FF8}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -33,6 +35,10 @@ Global
 		{CF53FB47-14FE-423E-B2FC-FCE17C869A6D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{CF53FB47-14FE-423E-B2FC-FCE17C869A6D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{CF53FB47-14FE-423E-B2FC-FCE17C869A6D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{812A446F-9BD5-4D72-9775-E41D29C08FF8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{812A446F-9BD5-4D72-9775-E41D29C08FF8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{812A446F-9BD5-4D72-9775-E41D29C08FF8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{812A446F-9BD5-4D72-9775-E41D29C08FF8}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
