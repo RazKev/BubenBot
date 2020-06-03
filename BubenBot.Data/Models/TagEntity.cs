@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
+#pragma warning disable CS8618 // Nullable doesn't apply for EFCore models
 namespace BubenBot.Data.Models
 {
     public class TagEntity
@@ -38,3 +39,4 @@ namespace BubenBot.Data.Models
         }
     }
 }
+#pragma warning restore CS8618 // Nullable
