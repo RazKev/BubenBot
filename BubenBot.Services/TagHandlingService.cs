@@ -1,71 +1,58 @@
-﻿using System;
-using System.Threading;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
+using BubenBot.Common.Messaging;
+using BubenBot.Services.Core.Notifications;
 using BubenBot.Services.Prefix;
 using BubenBot.Services.Tag;
 using Discord;
 using Discord.WebSocket;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 
 namespace BubenBot.Services
 {
-    public class TagHandlingService : IHostedService
+    public class TagHandlingService : INotificationHandler<MessageReceivedNotification>
     {
         private const string UnicodeQuestionMark = "\u2753"; // '❓'
 
         private readonly DiscordSocketClient _client;
+        private readonly ITagService _tagService;
+        private readonly  IPrefixService _prefixService;
         private readonly ILogger _logger;
-        private readonly IServiceProvider _provider;
 
         public TagHandlingService(
             DiscordSocketClient client,
-            ILogger<TagHandlingService> logger,
-            IServiceProvider provider)
+            IPrefixService prefixService,
+            ITagService tagService,
+            ILogger<TagHandlingService> logger)
         {
             _client = client;
             _logger = logger;
-            _provider = provider;
+            _prefixService = prefixService;
+            _tagService = tagService;
         }
 
-        public Task StartAsync(CancellationToken cancellationToken)
+        public async Task HandleNotificationAsync(MessageReceivedNotification notification)
         {
-            _client.MessageReceived += HandleTagAsync;
-            return Task.CompletedTask;
-        }
-
-        public Task StopAsync(CancellationToken cancellationToken)
-        {
-            _client.MessageReceived -= HandleTagAsync;
-            return Task.CompletedTask;
-        }
-
-        private async Task HandleTagAsync(SocketMessage message)
-        {
+            var message = notification.Message;
+            
             if (message.Author.IsBot)
                 return;
             if (!(message is SocketUserMessage userMessage))
                 return;
             if (!(message.Channel is IGuildChannel channel))
                 return;
-            
-            using var scope = _provider.CreateScope();
-            var prefixService = scope.ServiceProvider.GetRequiredService<IPrefixService>();
-            var tagService = scope.ServiceProvider.GetRequiredService<ITagService>();
 
             var guildId = channel.GuildId;
-            var prefix = await prefixService.GetTagPrefixAsync(guildId);
+            var prefix = await _prefixService.GetTagPrefixAsync(guildId);
 
             if (message.Content.Substring(0, prefix.Length) != prefix)
                 return;
 
             var tagName = userMessage.Content.Substring(prefix.Length);
 
-            if (!await tagService.TagExistsAsync(channel.GuildId, tagName))
+            if (!await _tagService.TagExistsAsync(channel.GuildId, tagName))
                 await message.AddReactionAsync(new Emoji(UnicodeQuestionMark));
             else
-                await tagService.PostTagAsync(guildId, channel.Id, tagName);
+                await _tagService.PostTagAsync(guildId, channel.Id, tagName);
         }
     }
 }

@@ -2,6 +2,8 @@
 using System.Reflection;
 using System.Threading;
 using System.Threading.Tasks;
+using BubenBot.Common.Messaging;
+using BubenBot.Services.Core.Notifications;
 using BubenBot.Services.Prefix;
 using Discord;
 using Discord.Commands;
@@ -11,7 +13,7 @@ using Microsoft.Extensions.Logging;
 
 namespace BubenBot.Services
 {
-    public class CommandHandlingService : IHostedService
+    public class CommandHandlingService : INotificationHandler<MessageReceivedNotification>
     {
         private readonly DiscordSocketClient _client;
         private readonly CommandService _commandService;
@@ -33,20 +35,10 @@ namespace BubenBot.Services
             _provider = provider;
         }
 
-        public async Task StartAsync(CancellationToken cancellationToken)
+        public async Task HandleNotificationAsync(MessageReceivedNotification notification)
         {
-            _client.MessageReceived += HandleCommandAsync;
-            await _commandService.AddModulesAsync(Assembly.GetEntryAssembly(), _provider);
-        }
-
-        public Task StopAsync(CancellationToken cancellationToken)
-        {
-            _client.MessageReceived -= HandleCommandAsync;
-            return Task.CompletedTask;
-        }
-
-        private async Task HandleCommandAsync(SocketMessage message)
-        {
+            var message = notification.Message;
+            
             if (!(message is SocketUserMessage userMessage))
                 return;
             if (!(message.Channel is IGuildChannel))

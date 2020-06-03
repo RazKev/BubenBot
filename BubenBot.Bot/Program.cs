@@ -1,8 +1,10 @@
 ﻿using System;
 using System.IO;
 using System.Threading.Tasks;
+using BubenBot.Common.Messaging;
 using BubenBot.Data;
 using BubenBot.Services;
+using BubenBot.Services.Core.Notifications;
 using BubenBot.Services.Prefix;
 using BubenBot.Services.Tag;
 using Discord;
@@ -57,11 +59,13 @@ namespace BubenBot.Bot
                         .UseNpgsql(context.Configuration.GetConnectionString("BotContext"))
                         .UseSnakeCaseNamingConvention()
                 )
+                .AddSingleton<IMessageDispatcher, MessageDispatcher>()
                 .AddScoped<IPrefixService, ConfigurationPrefixService>()
                 .AddScoped<ITagService, TagService>()
+                .AddScoped<INotificationHandler<MessageReceivedNotification>, CommandHandlingService>()
+                .AddScoped<INotificationHandler<MessageReceivedNotification>, TagHandlingService>()
                 .AddHostedService<StartupService>()
-                .AddHostedService<CommandHandlingService>()
-                .AddHostedService<TagHandlingService>()
+                .AddHostedService<NotificationSubscriberService>()
                 .AddHostedService<LogService>();
         }
     }
