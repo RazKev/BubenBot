@@ -1,0 +1,6 @@
+﻿bin/
+obj/
+.github/
+.idea/
+.vs/
+BubenBot.sln.DotSettings.user
