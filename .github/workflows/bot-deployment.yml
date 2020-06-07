@@ -15,7 +15,7 @@ jobs:
         uses: actions/setup-dotnet@v1
         with:
           dotnet-version: '5.0.100-preview.4.20258.7'
-          
+
       - uses: actions/checkout@v2
 
       - name: Install dependencies
@@ -33,7 +33,7 @@ jobs:
           name: repo
           path: .
 
-  push:
+  push_amd64:
     needs: build_and_test
     runs-on: ubuntu-latest
 
@@ -51,7 +51,29 @@ jobs:
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_PASSWORD }}
           repository: razkev/bubenbot
+          dockerfile: Dockerfile
           tags: latest
+  push_arm64:
+    needs: build_and_test
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Download a Build Artifact
+        uses: actions/download-artifact@v2
+        with:
+          # Artifact name
+          name: repo
+          # Destination path
+          path: .
+      - name: Build and push Docker images
+        uses: docker/build-push-action@v1.1.0
+        with:
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
+          repository: razkev/bubenbot
+          dockerfile: Dockerfile
+          tags: arm64v8
+
 # TODO: Deploy image
 # deploy:
 #   needs: push
