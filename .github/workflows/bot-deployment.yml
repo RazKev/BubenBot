@@ -71,10 +71,19 @@ jobs:
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_PASSWORD }}
           repository: razkev/bubenbot
-          dockerfile: Dockerfile
+          dockerfile: Dockerfile-arm64v8
           tags: arm64v8
 
-# TODO: Deploy image
-# deploy:
-#   needs: push
-#   runs-on: ubuntu-latest
+  deploy:
+    needs: push_arm64
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: SSH Remote Commands
+        uses: appleboy/ssh-action@v0.1.1
+        with:
+          host: ${{ secrets.REMOTE_HOST }}
+          passphrase: ${{ secrets.PASSPHRASE }}
+          username: ${{ secrets.REMOTE_USER }}
+          key: ${{ secrets.PRIVATE_KEY }}
+          script: ~/rebuild_bot.sh
