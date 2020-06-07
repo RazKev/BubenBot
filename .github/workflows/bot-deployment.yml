@@ -55,7 +55,7 @@ jobs:
           tags: latest
   push_arm64:
     needs: build_and_test
-    runs-on: ubuntu-latest
+    runs-on: [self-hosted, Linux, arm64]
 
     steps:
       - name: Download a Build Artifact
